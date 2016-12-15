@@ -1,0 +1,288 @@
+sq circ tria
+
+10 images per cat:
+
+Training Network cascade:
+Max neurons 500000. Desired error: 0.003000
+Neurons       0. Current error: 0.319956. Total error: 28.7961. Epochs   150. Bit fail  34
+Neurons       1. Current error: 0.143697. Total error: 12.9328. Epochs   450. Bit fail  13. candidate steepness 0.75. function FANN_ELLIOT
+Neurons       2. Current error: 0.234259. Total error: 21.0833. Epochs   750. Bit fail  31. candidate steepness 0.25. function FANN_ELLIOT
+Neurons       3. Current error: 0.258941. Total error: 23.3047. Epochs   964. Bit fail  27. candidate steepness 0.25. function FANN_ELLIOT
+Neurons       4. Current error: 0.080013. Total error:  7.2011. Epochs  1264. Bit fail   9. candidate steepness 1.00. function FANN_ELLIOT
+Neurons       5. Current error: 0.039291. Total error:  3.5362. Epochs  1564. Bit fail   4. candidate steepness 0.75. function FANN_SIGMOID
+Neurons       6. Current error: 0.339149. Total error: 30.5234. Epochs  1864. Bit fail  36. candidate steepness 0.50. function FANN_ELLIOT
+Neurons       7. Current error: 0.069648. Total error:  6.2683. Epochs  2065. Bit fail   9. candidate steepness 0.50. function FANN_ELLIOT
+Neurons       8. Current error: 0.082571. Total error:  7.4314. Epochs  2365. Bit fail  12. candidate steepness 0.50. function FANN_ELLIOT
+Neurons       9. Current error: 0.164892. Total error: 14.8403. Epochs  2617. Bit fail  16. candidate steepness 1.00. function FANN_ELLIOT
+Neurons      10. Current error: 0.056675. Total error:  5.1007. Epochs  2838. Bit fail   8. candidate steepness 0.25. function FANN_ELLIOT
+Neurons      11. Current error: 0.185770. Total error: 16.7193. Epochs  3138. Bit fail  18. candidate steepness 0.75. function FANN_ELLIOT
+Neurons      12. Current error: 0.131769. Total error: 11.8592. Epochs  3346. Bit fail  15. candidate steepness 0.75. function FANN_ELLIOT
+Neurons      13. Current error: 0.107025. Total error:  9.6323. Epochs  3559. Bit fail  12. candidate steepness 0.75. function FANN_SIGMOID
+Neurons      14. Current error: 0.048974. Total error:  4.4077. Epochs  3853. Bit fail   7. candidate steepness 0.25. function FANN_ELLIOT
+Neurons      15. Current error: 0.098839. Total error:  8.8955. Epochs  4153. Bit fail  10. candidate steepness 0.50. function FANN_ELLIOT
+Neurons      16. Current error: 0.149195. Total error: 13.4275. Epochs  4453. Bit fail  18. candidate steepness 0.75. function FANN_ELLIOT
+Neurons      17. Current error: 0.002995. Total error:  0.2695. Epochs  4693. Bit fail   0. candidate steepness 0.50. function FANN_ELLIOT
+Train outputs    Current error: 0.086259. Epochs   4843
+Saving Network as data_cascade.net.
+
+cascade test (data_cascade.net1: 100%
+cascade test (data_cascade.net2: 80%
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_cascade.net |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_cascade.net |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_cascade.net |tail -3;echo "";done
+etc
+
+parallel:
+
+99% OK
+
+time diff:
+cascade (data_cascade.net1): Current error: 0.190277. Epochs   4838 real	3m18.225s
+
+parallel 1 thread 5000 epochs  (data_mt.net1): max error reached.. break at epoch     3343. Current error: 0.0009618771 real	1m40.631s
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+
+parallel 2 threads 5000 epochs (data_mt.net2): max error reached.. break at epoch     2513. Current error: 0.0005634212 real	0m47.725s
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+100%
+
+parallel 3 threads 5000 epochs (data_mt.net3): max error reached.. break at epoch     2501. Current error: 0.0000020794 real	1m11.114s
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_mt.net3 |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_mt.net3 |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_mt.net3 |tail -3;echo "";done
+
+100%
+
+
+__next; full learn, 285 images, 8 levels of detail
+
+test with benchmark tool...
+
+
+cascade: nt neurons=20; 1 hid layers
+parallel 2 cores (data_mt_net1):
+Epochs         5000. Current error: 0.0637583658 (diff prev_error: -0.0103613511
+Unhappy.. this training run probably won't yield exact results..
+real	18m40.787s
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_mt.net1 |tail -3;echo "";done
+Tested 39 files, with 7 errors. Accuracy is aproximately 82.05128205128205128300
+
+cascade: nt neurons=40; 1 hid layers
+parallel 3 cores (data_mt_net2):
+Epochs         5000. Current error: 0.0650172085 (diff prev_error: -0.0039890260
+Unhappy.. this training run probably won't yield exact results..
+real	26m0.601s
+for file in $(ls square/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+for file in $(ls circle/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+for file in $(ls triangle/*|head -10);do ./exec_test.o $file data_mt.net2 |tail -3;echo "";done
+Tested 39 files, with 9 errors. Accuracy is aproximately 76.92307692307692307700
+
+cascade: nt neurons=40; 1 hid layers
+parallel 2 cores (data_mt_net3):
+Epochs         5000. Current error: 0.0158783253 (diff prev_error: 0.0020552613
+Unhappy.. this training run probably won't yield exact results..
+real	24m20.881s
+Tested 39 files, with 9 errors. Accuracy is aproximately 76.92307692307692307700
+
+
+5000 epochs max
+
+cascade: nt neurons=80; 1 hid layers
+parallel 1 cores (data_mt_net4):
+Epochs         5000. Current error: 0.0723350942 (diff prev_error: 0.0102743469
+Unhappy.. this training run probably won't yield exact results..
+real	56m19.681s
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+
+cascade: nt neurons=80; 1 hid layers
+parallel 2 cores (data_mt_net5):
+Epochs         5000. Current error: 0.0594527833 (diff prev_error: 0.0034979396
+Unhappy.. this training run probably won't yield exact results..
+real	49m52.057s
+Tested 39 files, with 6 errors. Accuracy is aproximately 84.61538461538461538500
+
+
+
+sidetest: SIGMOID_STEPWISE
+cascade: nt neurons=80; 1 hid layers
+parallel 2 cores (data_mt_net6):
+Epochs         5000. Current error: 0.1872144341 (diff prev_error: -0.0022784173
+Unhappy.. this training run probably won't yield exact results..
+real	50m55.568s
+Tested 39 files, with 17 errors. Accuracy is aproximately 56.41025641025641025700
+
+
+
+cascade: nt neurons=160; 1 hid layers  FANN_SIGMOID_SYMMETRIC
+parallel 1 cores (data_mt_net7):
+Epochs         5000. Current error: 0.0375820659 (diff prev_error: 0.0040850528
+Unhappy.. this training run probably won't yield exact results..
+real	112m52.102s
+Tested 39 files, with 9 errors. Accuracy is aproximately 76.92307692307692307700
+
+
+
++test cascade trained nn
+Neurons     212. Current error: 0.002996. Total error:  2.5616. Epochs 57287. Bit fail   5. candidate steepness 1.00. function FANN_ELLIOT
+Train outputs    Current error: 0.004591. Epochs  57437
+Saving Network as data_cascade.net.
+Cleaning up.
+real	635m16.579s
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+
+
+mt neurons=80; 2 hid layers
+parallel 3 cores (data_mt_net8):
+Epochs         5000. Current error: 0.0263579004 (diff prev_error: 0.0023230184
+Unhappy.. this training run probably won't yield exact results..
+real	35m8.219s
+Tested 39 files, with 6 errors. Accuracy is aproximately 84.61538461538461538500
+
+
+
+
+
+mt neurons=80; 
+2 hid layers, 10.000 epochs
+error: 0.001
+parallel 3 cores (data_mt_net9):
+Epochs         8110. Current error: 0.0039787423 (diff prev_error: -0.0005344190
+max error reached.. break at epoch     8116. Current error: 0.0008379408
+real	57m0.695s
+Tested 39 files, with 1 errors. Accuracy is aproximately 97.43589743589743589800
+Tested 168 files, with 21 errors. Accuracy is aproximately 87.50000000000000000000
+
+mt neurons=80; 
+error: 0.0001
+2 hid layers, 10.000 epochs
+parallel 4 cores (data_mt_net10):
+Epochs        10000. Current error: 0.0696844086 (diff prev_error: 0.0028639957
+Unhappy.. this training run probably won't yield exact results..
+real	55m54.494s
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+
+mt neurons=80; 
+error: 0.0001
+2 hid layers, 10.000 epochs
+parallel 2 cores (data_mt_net11):
+Epochs        10000. Current error: 0.0545352325 (diff prev_error: 0.0013794042
+Unhappy.. this training run probably won't yield exact results..
+real	65m42.777s
+Tested 39 files, with 4 errors. Accuracy is aproximately 89.74358974358974359000
+
+
+__
+
+train 7 networks with following parameters (seq 21-27):
+mt neurons=80; 
+2 hid layers, 10.000 epochs
+error: 0.001
+parallel 1 core (data_mt_net9):
+thomas@IPDeb:~/Working/squares_circles_tri_100x100$ for nr in $(seq 21 27);do ./testuntrained.sh data_mt.net$nr|tail -1;done
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+Tested 39 files, with 7 errors. Accuracy is aproximately 82.05128205128205128300
+Tested 39 files, with 6 errors. Accuracy is aproximately 84.61538461538461538500
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+Tested 39 files, with 10 errors. Accuracy is aproximately 74.35897435897435897500
+Tested 39 files, with 7 errors. Accuracy is aproximately 82.05128205128205128300
+Tested 39 files, with 10 errors. Accuracy is aproximately 74.35897435897435897500
+thomas@IPDeb:~/Working/squares_circles_tri_100x100$ for nr in $(seq 21 27);do ./testuntrained_google.sh data_mt.net$nr|tail -1;done
+Tested 168 files, with 39 errors. Accuracy is aproximately 76.78571428571428571500
+Tested 168 files, with 23 errors. Accuracy is aproximately 86.30952380952380952400
+Tested 168 files, with 33 errors. Accuracy is aproximately 80.35714285714285714300
+Tested 168 files, with 74 errors. Accuracy is aproximately 55.95238095238095238100
+Tested 168 files, with 37 errors. Accuracy is aproximately 77.97619047619047619100
+Tested 168 files, with 51 errors. Accuracy is aproximately 69.64285714285714285800
+Tested 168 files, with 35 errors. Accuracy is aproximately 79.16666666666666666700
+
+
+_
+test with 50x50 images..
+
+- new learn file
+- train7 with params: seq 31-37
+mt neurons=80; 
+2 hid layers, 10.000 epochs
+error: 0.001
+thomas@IPDeb:~/Working/squares_circles_tri_50x50$ for nr in $(seq 31 37);do ./testuntrained.sh data_mt.net$nr|tail -1;done
+Tested 39 files, with 5 errors. Accuracy is aproximately 87.17948717948717948800
+Tested 39 files, with 9 errors. Accuracy is aproximately 76.92307692307692307700
+Tested 39 files, with 8 errors. Accuracy is aproximately 79.48717948717948718000
+Tested 39 files, with 8 errors. Accuracy is aproximately 79.48717948717948718000
+Tested 39 files, with 7 errors. Accuracy is aproximately 82.05128205128205128300
+Tested 39 files, with 6 errors. Accuracy is aproximately 84.61538461538461538500
+Tested 39 files, with 11 errors. Accuracy is aproximately 71.79487179487179487200
+thomas@IPDeb:~/Working/squares_circles_tri_50x50$ for nr in $(seq 31 37);do ./testuntrained_google.sh data_mt.net$nr|tail -1;done
+Tested 168 files, with 29 errors. Accuracy is aproximately 82.73809523809523809600
+Tested 168 files, with 31 errors. Accuracy is aproximately 81.54761904761904762000
+Tested 168 files, with 26 errors. Accuracy is aproximately 84.52380952380952381000
+Tested 168 files, with 28 errors. Accuracy is aproximately 83.33333333333333333400
+Tested 168 files, with 27 errors. Accuracy is aproximately 83.92857142857142857200
+Tested 168 files, with 31 errors. Accuracy is aproximately 81.54761904761904762000
+Tested 168 files, with 39 errors. Accuracy is aproximately 76.78571428571428571500
+
+
+
+
+- other tests
+!test stepwise algo
+test dimensionality
+!test with cascade gleaned nr of neurons
+!TEST WITH AN EXTRA HIDDEN LAYER
+train7.sh for best approach..
+
+
+
+
+
+
+
+
+
+ The symmetric function produces output between -1 and 1, while the other non-symmetric Sigmoids product an input between 0 and 1. The stepwise qualifier on the activation function I have used implies that it is an approximation of the Sigmoid function, so some accuracy is sacrificed for some gain in calculation speed. 
+
+ net.set_activation_function_hidden(FANN::SIGMOID_STEPWISE);
+net.set_activation_function_output(FANN::SIGMOID_STEPWISE);
+
+
+
+((totalCnt+=1))
+
+
+
+test untr circles:
+totalCnt=0
+totalErrs=0
+errs=0;for file in $(ls 0_untr_square/*);do ((totalCnt+=1));if [ $(./exec_test_1answer.o $file data_mt.net2|grep -c square) == 1 ];then echo "Correct, is a square";else echo "Wrong";let errs=errs+1;fi ;done;echo "We have ${errs} errs"
+let totalErrs=totalErrs+errs;
+errs=0;for file in $(ls 0_untr_circle/*);do ((totalCnt+=1)); if [ $(./exec_test_1answer.o $file data_mt.net2|grep -c circle) == 1 ];then echo "Correct, is a circle";else echo "Wrong";let errs=errs+1;fi ;done;echo "We have ${errs} errs"
+let totalErrs=totalErrs+errs;
+errs=0;for file in $(ls 0_untr_triangle/*);do ((totalCnt+=1)); if [ $(./exec_test_1answer.o $file data_mt.net2|grep -c triangle) == 1 ];then echo "Correct, is a triangle";else echo "Wrong";let errs=errs+1;fi ;done;echo "We have ${errs} errs"
+let totalErrs=totalErrs+errs;
+printf "Tested ${totalCnt} files, with ${totalErrs} errors. Accuracy is aproximately $(echo "100-((${totalErrs}/${totalCnt})*100)"|bc -l)\n"
+
+
+
+
+
+
+
+accuracy
+9 out of 39.. 
+
+
+100-(9/39)*100
+
+echo "100-((${totalErrs}/${totalCnt})*100)"|bc -l
+
+
+
+
+
+
